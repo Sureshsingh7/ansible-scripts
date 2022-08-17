@@ -1,0 +1,30 @@
+--- 
+- name: Clone artifact repository from github
+  git:
+    repo: https://Sureshsingh7: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@github.com/Sureshsingh7/artifact_repo.git
+    dest: roles/localhost/files/artifact_server/
+    clone: yes
+    update: yes
+
+- name: Creates directories if not available
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - 'roles/localhost/files/artifact_server/ODS_build'
+  - 'roles/localhost/files/artifact_server/ODS_datastore'
+
+- name: Copying artifacts to github repo
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'roles/localhost/files/artifacts/ODS_build-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/ODS_build/ODS_build-{{ artifact_version }}.zip' }
+    - { src: 'roles/localhost/files/artifacts/ODS_datastore-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/ODS_datastore/ODS_datastore-{{ artifact_version }}.zip' }
+
+- name: commit artifacts to github
+  shell: |
+    cd roles/localhost/files/artifact_server/
+    git add .
+    git commit -m "artifacts added to git repo"
+    git push origin master

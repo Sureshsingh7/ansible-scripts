@@ -1,0 +1,26 @@
+--- 
+- name: Clone github repository
+  git:
+    repo: https://github.com/Sureshsingh7/Test.git
+    dest: roles/localhost/files/github_repo/
+    clone: yes
+    update: 'yes'
+
+- name: Create artifact folder
+  file:
+    path: roles/localhost/files/artifacts
+    state: directory
+
+- name: perform Zip operation
+  archive:
+    path: "{{ item.path }}"
+    dest: "{{ item.dest }}"
+    format: zip
+  with_items:
+    - { path: 'roles/localhost/files/github_repo/ODS_build/', dest: 'roles/localhost/files/artifacts/ODS_build-{{ artifact_version }}.zip' }
+    - { path: 'roles/localhost/files/github_repo/ODS_datastore/', dest: 'roles/localhost/files/artifacts/ODS_datastore-{{ artifact_version }}.zip' }
+
+- name: Including task for commiting artifact to github repo
+  include_tasks: commit_artifact.yml
+
+

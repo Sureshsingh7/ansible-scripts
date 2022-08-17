@@ -1,0 +1,12 @@
+# all:
+#   children:
+#     local:
+#       children:
+#         hosts:
+#           localhost:
+#     appserver:
+#       children:
+#         hosts:
+#           ansible-node1.eastus.cloudapp.azure.com:
+# vars:
+#   artifact_version: 1.1
