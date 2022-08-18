@@ -1,12 +1,17 @@
-# all:
-#   children:
-#     local:
-#       children:
-#         hosts:
-#           localhost:
-#     appserver:
-#       children:
-#         hosts:
-#           ansible-node1.eastus.cloudapp.azure.com:
-# vars:
-#   artifact_version: 1.1
+---
+all:
+  children:
+    appserver:
+      hosts:  
+        # 40.71.19.153:
+        ansible-node1.eastus.cloudapp.azure.com:
+  vars:
+    ansible_connection: winrm
+    ansible_user: sroot
+    ansible_password: linux@123qwe
+    artifact_version: 1.1
+    ansible_winrm_transport: basic
+    ansible_port: 5985
+    ansible_winrm_server_cert_validation: ignore
+
+    # ansible_winrm_transport: kerberos
