@@ -1,4 +1,5 @@
 ---
  - hosts: appserver
-   name: ping all hosts
-   win_ping
+   tasks:
+   - name: ping all hosts
+     win_ping
