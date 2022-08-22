@@ -1,0 +1,4 @@
+---
+ - hosts: appserver
+   name: ping all hosts
+   win_ping
