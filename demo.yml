@@ -1,5 +1,6 @@
 ---
  - hosts: appserver
+   gather_facts: false
    tasks:
      - name: ping all hosts
        win_ping:
