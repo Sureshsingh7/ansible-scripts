@@ -1,7 +1,7 @@
 --- 
 - name: Clone artifact repository from github
   git:
-    repo: https://Sureshsingh7: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@github.com/Sureshsingh7/artifact_repo.git
+    repo: https://Sureshsingh7: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@github.com/Sureshsingh7/artifact_repo.git
     dest: roles/localhost/files/artifact_server/
     clone: yes
     update: yes
