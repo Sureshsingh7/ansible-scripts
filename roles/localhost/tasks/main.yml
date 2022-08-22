@@ -24,4 +24,3 @@
 
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml
-
