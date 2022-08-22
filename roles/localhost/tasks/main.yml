@@ -13,12 +13,14 @@
 
 - name: perform Zip operation
   archive:
-    path: "{{ item.path }}"
+    path:
+    -  "{{ item.path.path1 }}"
+    -  "{{ item.path.path2 }}"
     dest: "{{ item.dest }}"
     format: zip
-  with_items:
-    - { path: 'roles/localhost/files/github_repo/ODS_build/', dest: 'roles/localhost/files/artifacts/ODS_build-{{ artifact_version }}.zip' }
-    - { path: 'roles/localhost/files/github_repo/ODS_datastore/', dest: 'roles/localhost/files/artifacts/ODS_datastore-{{ artifact_version }}.zip' }
+  with_items: 
+  - { path: {path1: roles/localhost/files/github_repo/ODS_python/, path2: roles/localhost/files/github_repo/ODS_batch}, dest: 'roles/localhost/files/artifacts/{{  windows_artifacts }}-{{ artifact_version }}.zip' }
+  - { path: {path1: roles/localhost/files/github_repo/ODS_datastore/, path2: roles/localhost/files/github_repo/ODS_build}, dest: 'roles/localhost/files/artifacts/{{  snowflake_artifacts  }}-{{ artifact_version }}.zip' }
 
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml

@@ -13,5 +13,7 @@ all:
     ansible_winrm_transport: basic
     ansible_port: 5985
     ansible_winrm_server_cert_validation: ignore
+    windows_artifacts: "windows_artifacts"
+    snowflake_artifacts: "snowflake_artifacts"
 
     # ansible_winrm_transport: kerberos
