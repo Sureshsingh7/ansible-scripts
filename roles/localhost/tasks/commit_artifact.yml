@@ -1,39 +1,30 @@
 --- 
+- name: Clone artifact repository from github
+  git:
+    repo: https://Sureshsingh7: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@github.com/Sureshsingh7/artifact_repo.git
+    dest: roles/localhost/files/artifact_server/
+    clone: yes
+    update: yes
+
 - name: Creates directories if not available
   file:
     path: "{{ item }}"
     state: directory
   with_items:
-  - 'roles/localhost/files/artifact_server'
-
-- name: Clone artifact repository from github
-  shell: |
-    cd roles/localhost/files/artifact_server/
-    git init
-    git config core.sparsecheckout true
-    echo artifactory >> .git/info/sparse-checkout
-    git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git
-    git pull origin master
-
-# - name: Creates directories if not available
-#   file:
-#     path: "{{ item }}"
-#     state: directory
-#   with_items:
-#   - 'roles/localhost/files/artifact_server/{{ windows_artifacts }}'
-#   - 'roles/localhost/files/artifact_server/{{ snowflake_artifacts }}'
+  - 'roles/localhost/files/artifact_server/{{ windows_artifacts }}'
+  - 'roles/localhost/files/artifact_server/{{ snowflake_artifacts }}'
 
 - name: Copying artifacts to github repo
   copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   with_items:
-    - { src: 'roles/localhost/files/artifacts/{{ windows_artifacts }}-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/artifactory/windows_artifacts/{{ windows_artifacts }}-{{ artifact_version }}.zip' }
-    - { src: 'roles/localhost/files/artifacts/{{ snowflake_artifacts }}-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/artifactory/snowflake_artifacts/{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
+    - { src: 'roles/localhost/files/artifacts/{{ python_artifacts }}-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/ODS_build/{{ windows_artifacts }}-{{ artifact_version }}.zip' }
+    - { src: 'roles/localhost/files/artifacts/{{ snowflake_artifacts }}-{{ artifact_version }}.zip', dest: 'roles/localhost/files/artifact_server/ODS_datastore/{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
 
 - name: commit artifacts to github
   shell: |
-    cd 'roles/localhost/files/artifact_server/artifactory'
+    cd roles/localhost/files/artifact_server/
     git add .
     git commit -m "artifacts added to git repo"
     git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
