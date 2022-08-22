@@ -9,7 +9,7 @@
 - name: Clone artifact repository from github
   shell: |
     cd roles/localhost/files/artifact_server/
-    git initclear
+    git init
     git config core.sparsecheckout true
     echo artifactory >> .git/info/sparse-checkout
     git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git
