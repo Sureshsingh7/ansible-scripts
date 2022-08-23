@@ -1,5 +1,5 @@
 ---
- - hosts: localhost
+ - hosts: appserver
    gather_facts: False
    roles:
      - localhost
