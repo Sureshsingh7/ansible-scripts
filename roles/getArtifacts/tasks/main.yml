@@ -1,0 +1,24 @@
+---
+- name: Create folder for checkout artifactory 
+  win_file: 
+    path: D:\artifactory_temp\
+    state: directory
+
+- name: Copy bat file
+  win_copy:
+    src: "sparse-checkout.bat"
+    dest: 'D:\artifactory_temp\'
+    force: yes
+
+- name: execute sparse-checkout script
+  win_shell: |
+    Start-Process -FilePath "D:\artifactory_temp\sparse-checkout.bat" -Wait -NoNewWindow
+# - name: Checkout artifact repo
+#   win_command: "D: && cd artifactory_temp && git init"
+    
+    
+    
+    # git config core.sparsecheckout true
+    # git remote add -f origin https://github.com/Sureshsingh7/ansible-scripts.git
+    # echo artifactory >> .git/info/sparse-checkout
+    # git pull origin master
