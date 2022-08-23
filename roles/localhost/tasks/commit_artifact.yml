@@ -12,7 +12,7 @@
     git init
     git config core.sparsecheckout true
     echo artifactory >> .git/info/sparse-checkout
-    git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git
+    git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git
     git pull origin master
 
 # - name: Creates directories if not available
@@ -36,4 +36,4 @@
     cd 'roles/localhost/files/artifact_server/artifactory'
     git add .
     git commit -m "artifacts added to git repo"
-    git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
+    git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
