@@ -1,10 +1,17 @@
 --- 
-- name: Clone github repository
-  git:
-    repo: https://github.com/Sureshsingh7/Test.git
-    dest: roles/localhost/files/github_repo/
-    clone: yes
-    update: 'yes'
+- name: Creates directories if not available
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - 'roles/localhost/files/github_repo'
+
+- name: Clone artifact repository from github
+  shell: |
+    cd roles/localhost/files/github_repo/
+    git init
+    git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/Test.git
+    git pull origin master
 
 - name: Create artifact folder
   file:
