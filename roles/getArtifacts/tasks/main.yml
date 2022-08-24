@@ -18,3 +18,6 @@
 - name: debug
   debug:
     msg: '{{ stderr }}'
+
+- name: Including task for commiting artifact to github repo
+  include_tasks: prepare_appserver.yml
