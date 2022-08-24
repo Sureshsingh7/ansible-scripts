@@ -1,6 +1,6 @@
 ---
- - hosts: appserver
-   gather_facts: false
-   tasks:
-     - name: ping all hosts
-       win_ping:
+- hosts: localhost
+  tasks:
+    - name: install winodows
+      command: "ansible-galaxy collection install community.windows"
+    
