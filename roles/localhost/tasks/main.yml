@@ -21,7 +21,7 @@
       dest: "{{ item.dest }}"
       remote_src: yes
   loop: '{{ artifact_copy }}'
-   clear
+  
 - name: perform Zip operation
   community.windows.win_zip:
     src: "{{ item.path }}"
