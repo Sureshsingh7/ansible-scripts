@@ -1,1 +1,5 @@
-
+---
+- name: Replace old folder to backup folder
+- name: copy snowflake code zip to deployment folder
+- name: unzip the code
+- name: run powershell scripts 
