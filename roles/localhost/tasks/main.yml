@@ -23,9 +23,10 @@
   loop: '{{ artifact_copy }}'
   
 - name: perform Zip operation
-  community.windows.win_zip:
-    src: "{{ item.path }}"
-    dest: "{{ item.dest }}"
+  win_shell: |
+    Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}"
+    # src: "{{ item.path }}"
+    # dest: "{{ item.dest }}"
   with_items: 
   - { path: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}' , dest: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
   - { path: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
