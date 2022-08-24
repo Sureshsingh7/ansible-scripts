@@ -20,12 +20,8 @@
       src: "{{ item.path }}"     
       dest: "{{ item.dest }}"
       remote_src: yes
-  loop:
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_python', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_batch', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_datastore', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_build', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
-
+  loop: '{{ artifact_copy }}'
+   clear
 - name: perform Zip operation
   community.windows.win_zip:
     src: "{{ item.path }}"

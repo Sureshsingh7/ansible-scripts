@@ -1,6 +1,12 @@
 ---
 # vars file for localhost
+git_checkout_path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
 temp_dir: 'D:\ansible_temp'
 windows_artifacts: 'windows_artifacts'
 snowflake_artifacts: 'snowflake_artifacts'
 temp_artifacts: '{{ temp_dir }}\artifacts'
+artifact_copy:
+- {path: '{{ git_checkout_path}}\ODS_python', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
+- {path: '{{ git_checkout_path}}\ODS_batch', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
+- {path: '{{ git_checkout_path}}\ODS_datastore', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
+- {path: '{{ git_checkout_path}}\ODS_build', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
