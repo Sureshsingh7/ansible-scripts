@@ -1,11 +1,17 @@
 ---
- - hosts: appserver
-   gather_facts: False
-   roles:
-     - localhost
+- hosts: localhost
+  tasks:
+    - name: install winodows
+      command: "ansible-galaxy collection install community.windows"
+    
 
- - hosts: appserver
-   gather_facts: False
-   roles:
-     - getArtifacts
+- hosts: appserver
+  gather_facts: False
+  roles:
+    - localhost
+
+- hosts: appserver
+  gather_facts: False
+  roles:
+    - getArtifacts
 
