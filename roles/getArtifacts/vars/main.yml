@@ -1,3 +1,5 @@
 ---
 # vars file for roles/getArtif
 temp_artifactory: 'D:\artifactory_temp\'
+deployment_folder: 'D:\projects\deployments\BMO'
+instance_name: 'instance1'

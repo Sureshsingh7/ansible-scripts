@@ -1,5 +1,44 @@
 ---
+- name: Check state of deployment folder.
+  win_stat:
+    path: "{{ deployment_folder }}\\{{ instance_name }}"
+  register: deployment_folder_exist
+
+- name: Check whether backup folder exist or not.
+  win_stat:
+    path: "{{ deployment_folder }}\\{{ instance_name }}.bkp"
+  
+  register: backup_folder_exist
+  
+
+- name: Delete backup folder if exist.
+  win_file: 
+    path: '{{ deployment_folder }}\{{ instance_name }}.bkp'
+    state: absent
+  when:
+  - backup_folder_exist.stat.exists
+  - deployment_folder_exist.stat.exists
+
 - name: Replace old folder to backup folder
+  win_shell: | 
+    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}.bkp
+  when: deployment_folder_exist.stat.exists
+
+- name: Create folder for checkout artifactory 
+  win_file: 
+    path: '{{ deployment_folder }}\{{ instance_name }}'
+    state: directory
+
 - name: copy python code zip to deployment folder
-- name: unzip the code
-- name: run powershell scripts 
+  win_copy:
+    src: 'D:\artifactory_temp\artifactory\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\{{ instance_name }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    remote_src: yes
+
+- name: Extract war at {{ deployment_folder }}
+  win_unzip:
+    src: '{{ deployment_folder }}\{{ instance_name }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\{{ instance_name }}\'
+    delete_archive: yes
+    
+# - name: run powershell scripts 

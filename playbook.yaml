@@ -1,11 +1,11 @@
 ---
-- hosts: appserver
-  gather_facts: False
-  roles:
-    - localhost
-
 # - hosts: appserver
 #   gather_facts: False
 #   roles:
-#     - getArtifacts
+#     - localhost
+
+- hosts: appserver
+  gather_facts: False
+  roles:
+    - getArtifacts
 
