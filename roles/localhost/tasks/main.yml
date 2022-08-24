@@ -33,8 +33,8 @@
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml
 
-- name: Remove ansible_temp folder
-  win_file:
-    path: '{{ temp_dir }}'
-    state: absent
-    force: yes
+# - name: Remove ansible_temp folder
+#   win_file:
+#     path: '{{ temp_dir }}'
+#     state: absent
+#     force: yes

@@ -9,12 +9,12 @@
 - name: Copy bat file
   win_copy:
     src: "sparse-checkout.bat"
-    dest: '{{ temp_artifacts }}\artifact_server\\'
+    dest: '{{ temp_artifacts }}\artifact_server\'
     force: yes
 
 - name: Clone artifact repository from github
   win_shell: |
-    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://github.com/Sureshsingh7/ansible-scripts.git","artifactory","master"
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://github.com/Sureshsingh7/ansible-scripts.git","artifactory","master"
 
 # - name: Creates directories if not available
 #   file:
@@ -33,9 +33,9 @@
     - { src: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\windows_artifacts\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
     - { src: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\snowflake_artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
 
-- name: commit artifacts to github
-  win_shell: |
-    cd '{{ temp_artifacts }}\artifact_server\artifactory'
-    git add .
-    git commit -m "artifacts added to git repo"
-    git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
+# - name: commit artifacts to github
+#   win_shell: |
+#     cd '{{ temp_artifacts }}\artifact_server\artifactory'
+#     git add .
+#     git commit -m "artifacts added to git repo"
+#     git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
