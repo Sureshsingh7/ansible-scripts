@@ -2,5 +2,5 @@
 - hosts: localhost
   tasks:
     - name: install winodows
-      command: "ansible-galaxy collection install community.windows"
+      command: "whoami"
     
