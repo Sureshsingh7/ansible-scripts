@@ -22,13 +22,13 @@
       remote_src: yes
   loop: '{{ artifact_copy }}'
   
-# - name: perform Zip operation
-#   community.windows.win_zip:
-#     src: "{{ item.path }}"
-#     dest: "{{ item.dest }}"
-#   with_items: 
-#   - { path: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}' , dest: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
-#   - { path: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
+- name: perform Zip operation
+  community.windows.win_zip:
+    src: "{{ item.path }}"
+    dest: "{{ item.dest }}"
+  with_items: 
+  - { path: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}' , dest: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
 
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml
