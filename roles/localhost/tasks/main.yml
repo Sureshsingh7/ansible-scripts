@@ -24,7 +24,7 @@
   
 - name: perform Zip operation
   win_shell: |
-    Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }} -update -verbose"
+    Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
     # src: "{{ item.path }}"
     # dest: "{{ item.dest }}"
   with_items: 
