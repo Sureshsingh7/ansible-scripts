@@ -1,2 +1,6 @@
 ---
 # vars file for localhost
+temp_dir: 'D:\ansible_temp'
+windows_artifacts: 'windows_artifacts'
+snowflake_artifacts: 'snowflake_artifacts'
+temp_artifacts: '{{ temp_dir }}\artifacts'

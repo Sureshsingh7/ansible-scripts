@@ -12,7 +12,7 @@
 
 - name: Create artifact folder
   win_file:
-    path: D:/ansible_temp/artifacts
+    path: '{{ temp_artifacts }}'
     state: directory
     
 - name: combining deployable artifacts
@@ -21,24 +21,24 @@
       dest: "{{ item.dest }}"
       remote_src: yes
   loop:
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_python', dest: 'D:\ansible_temp\artifacts\{{  windows_artifacts }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_batch', dest: 'D:\ansible_temp\artifacts\{{  windows_artifacts }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_datastore', dest: 'D:\ansible_temp\\artifacts\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
-    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_build', dest: 'D:\ansible_temp\\artifacts\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
+    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_python', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
+    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_batch', dest: '{{ temp_artifacts }}\{{  windows_artifacts }}-{{ artifact_version }}' }
+    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_datastore', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
+    - {path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053\ODS_build', dest: '{{ temp_artifacts }}\{{  snowflake_artifacts  }}-{{ artifact_version }}' }
 
 - name: perform Zip operation
   community.windows.win_zip:
     src: "{{ item.path }}"
     dest: "{{ item.dest }}"
   with_items: 
-  - { path: 'D:\ansible_temp\artifacts\{{ windows_artifacts }}-{{ artifact_version }}' , dest: 'D:\ansible_temp\artifacts\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
-  - { path: 'D:\ansible_temp\\artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: 'D:\ansible_temp\artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}' , dest: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
 
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml
 
 - name: Remove ansible_temp folder
   win_file:
-    path: D:\ansible_temp
+    path: '{{ temp_dir }}'
     state: absent
     force: yes

@@ -1,7 +1,7 @@
 D:
-cd artifactory_temp
+cd %1
 git init
 git config core.sparsecheckout true
-git remote add -f origin https://github.com/Sureshsingh7/ansible-scripts.git
-echo artifactory >> .git/info/sparse-checkout
-git pull origin master
+git remote add -f origin %2
+echo %3>> .git/info/sparse-checkout
+git pull origin %4

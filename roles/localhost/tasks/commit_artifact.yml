@@ -4,16 +4,17 @@
     path: "{{ item }}"
     state: directory
   with_items:
-  - 'D:/ansible_temp/artifacts/artifact_server'
+  - '{{ temp_artifacts }}\artifact_server'
+
+- name: Copy bat file
+  win_copy:
+    src: "sparse-checkout.bat"
+    dest: '{{ temp_artifacts }}\artifact_server\\'
+    force: yes
 
 - name: Clone artifact repository from github
   win_shell: |
-    cd D:/ansible_temp/artifacts/artifact_server
-    git init
-    git config core.sparsecheckout true
-    echo artifactory >> .git/info/sparse-checkout
-    git remote add -f origin https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git
-    git pull origin master
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://github.com/Sureshsingh7/ansible-scripts.git","artifactory","master"
 
 # - name: Creates directories if not available
 #   file:
@@ -29,12 +30,12 @@
       dest: "{{ item.dest }}"
       remote_src: yes
   with_items:
-    - { src: 'D:\ansible_temp\artifacts\{{ windows_artifacts }}-{{ artifact_version }}.zip', dest: 'D:\ansible_temp\artifacts\artifact_server\artifactory\windows_artifacts\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
-    - { src: 'D:\ansible_temp\artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}.zip', dest: 'D:\ansible_temp\artifacts\artifact_server\artifactory\snowflake_artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
+    - { src: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\windows_artifacts\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
+    - { src: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\snowflake_artifacts\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
 
 - name: commit artifacts to github
   win_shell: |
-    cd 'D:\ansible_temp\artifacts\artifact_server\artifactory'
+    cd '{{ temp_artifacts }}\artifact_server\artifactory'
     git add .
     git commit -m "artifacts added to git repo"
     git push https://Sureshsingh7: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@github.com/Sureshsingh7/ansible-scripts.git --all
