@@ -7,18 +7,14 @@
 - name: Copy bat file
   win_copy:
     src: "sparse-checkout.bat"
-    dest: 'D:\artifactory_temp\'
+    dest: '{{ temp_artifactory }}'
     force: yes
 
-- name: execute sparse-checkout script
+- name: Clone artifact repository from github
   win_shell: |
-    Start-Process -FilePath "D:\artifactory_temp\sparse-checkout.bat" -Wait -NoNewWindow
-# - name: Checkout artifact repo
-#   win_command: "D: && cd artifactory_temp && git init"
-    
-    
-    
-    # git config core.sparsecheckout true
-    # git remote add -f origin https://github.com/Sureshsingh7/ansible-scripts.git
-    # echo artifactory >> .git/info/sparse-checkout
-    # git pull origin master
+    Start-Process -FilePath "{{ temp_artifactory }}\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifactory }}","https://github.com/Sureshsingh7/ansible-scripts.git","artifactory","master"
+  register: stderr
+
+- name: debug
+  debug:
+    msg: '{{ stderr }}'

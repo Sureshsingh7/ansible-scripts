@@ -1,2 +1,3 @@
 ---
-# vars file for roles/getArtifacts
+# vars file for roles/getArtif
+temp_artifactory: 'D:\artifactory_temp\'
