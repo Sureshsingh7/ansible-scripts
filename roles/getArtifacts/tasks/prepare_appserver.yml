@@ -21,7 +21,7 @@
 
 - name: Replace old folder to backup folder
   win_shell: | 
-    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}.{{ tower_job_id }} 
+    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}_{{ tower_job_id }}.bkp 
   when: deployment_folder_exist.stat.exists
 
 - name: Create folder for checkout artifactory 
