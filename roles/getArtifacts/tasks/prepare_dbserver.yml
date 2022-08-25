@@ -18,12 +18,12 @@
 - name: copy database code zip to {{ snowflake_artifacts }} deployment folder
   win_copy:
     src: '{{ temp_artifactory }}\artifactory\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\script\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\build\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
     remote_src: yes
 
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
-    src: '{{ deployment_folder }}\script\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\script\'
+    src: '{{ deployment_folder }}\build\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\build\'
     delete_archive: yes
     
