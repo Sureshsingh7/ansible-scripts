@@ -3,3 +3,5 @@
 temp_artifactory: 'D:\artifactory_temp'
 deployment_folder: 'D:\Project\GAMODS_DEV'
 instance_name: 'instance1'
+snowflake_deployment_folder: '{{ deployment_folder }}\build'
+windows_deployment_folder: '{{ deployment_folder }}\script'

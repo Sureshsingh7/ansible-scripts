@@ -1,7 +1,7 @@
 ---
 - name: Check state of deployment folder for windows artifact.
   win_stat:
-    path: "{{ deployment_folder }}\\script\\ODS_python"
+    path: "{{ snowflake_deployment_folder }}\\ODS_python"
   register: python_folder_exist
 
 - name: Create Archive folder if not present
@@ -27,24 +27,24 @@
 
 - name: Replace old folder to backup {{ windows_artifacts }} folder 
   win_shell: | 
-    Compress-Archive -Path "{{ deployment_folder }}\script\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
+    Compress-Archive -Path "{{ snowflake_deployment_folder }}\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
   when: python_folder_exist.stat.exists
 
 - name: Create folder for instance 
   win_file: 
-    path: '{{ deployment_folder }}\script'
+    path: '{{ snowflake_deployment_folder }}'
     state: directory
 
 - name: copy python code zip to {{ windows_artifacts }} deployment folder
   win_copy:
     src: '{{ temp_artifactory }}\artifactory\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ snowflake_deployment_folder }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
     remote_src: yes
 
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
-    src: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\script\'
+    src: '{{ snowflake_deployment_folder }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ snowflake_deployment_folder }}\'
     delete_archive: yes
     
 # - name: run powershell scripts 

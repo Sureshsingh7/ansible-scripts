@@ -1,7 +1,7 @@
 ---
 - name: Check state of deployment folder for snoflake artifact.
   win_stat:
-    path: "{{ deployment_folder }}\\build\\ODS_Build"
+    path: "{{ windows_deployment_folder }}\\ODS_Build"
   register: snowflake_folder_exist
 
 - name: Replace old folder to backup {{ snowflake_artifacts }} folder 
