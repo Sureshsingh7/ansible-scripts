@@ -1,8 +1,16 @@
 ---
 - name: Check state of deployment folder.
   win_stat:
-    path: "{{ deployment_folder }}\\{{ instance_name }}"
-  register: deployment_folder_exist
+    path: 
+    - "{{ deployment_folder }}\\script\\ODS_python"
+    - "{{ deployment_folder }}\\script\\ODS_batch"
+  register: python_folder_exist
+
+- name: Create Archive folder if not present
+  win_file: 
+    path: '{{ deployment_folder }}\archive'
+    state: directory
+
 
 #- name: Check whether backup folder exist or not.
 #  win_stat:
@@ -21,24 +29,24 @@
 
 - name: Replace old folder to backup folder
   win_shell: | 
-    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}_{{ tower_job_id }}.bkp 
+    Compress-Archive -Path "{{ deployment_folder }}\script\*" -DestinationPath "{{ deployment_folder }}\archive\{{ instance_name }}_{{ tower_job_id }}_bkp.zip " -update -verbose 
   when: deployment_folder_exist.stat.exists
 
-- name: Create folder for checkout artifactory 
+- name: Create folder for instance 
   win_file: 
-    path: '{{ deployment_folder }}\{{ instance_name }}'
+    path: '{{ deployment_folder }}\script'
     state: directory
 
 - name: copy python code zip to deployment folder
   win_copy:
-    src: 'D:\artifactory_temp\artifactory\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\{{ instance_name }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    src: '{{ temp_artifactory }}\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
     remote_src: yes
 
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
-    src: '{{ deployment_folder }}\{{ instance_name }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\{{ instance_name }}\'
+    src: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\script\'
     delete_archive: yes
     
 # - name: run powershell scripts 
