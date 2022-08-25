@@ -37,7 +37,7 @@
 
 - name: copy python code zip to deployment folder
   win_copy:
-    src: '{{ temp_artifactory }}\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    src: '{{ temp_artifactory }}\artifactory\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
     dest: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
     remote_src: yes
 
