@@ -1,13 +1,13 @@
 ---
 - name: Create folder for checkout artifactory 
   win_file: 
-    path: D:\artifactory_temp\
+    path: "{{ temp_artifactory }}"
     state: directory
 
 - name: Copy bat file
   win_copy:
     src: "sparse-checkout.bat"
-    dest: '{{ temp_artifactory }}'
+    dest: '{{ temp_artifactory }}\'
     force: yes
 
 - name: Clone artifact repository from github
