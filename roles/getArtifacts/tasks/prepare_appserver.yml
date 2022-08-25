@@ -1,9 +1,7 @@
 ---
 - name: Check state of deployment folder.
   win_stat:
-    path: 
-    - "{{ deployment_folder }}\\script\\ODS_python"
-    - "{{ deployment_folder }}\\script\\ODS_batch"
+    path: "{{ deployment_folder }}\\script\\ODS_python"
   register: python_folder_exist
 
 - name: Create Archive folder if not present
@@ -46,7 +44,7 @@
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
     src: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\script\'
+    dest: '{{ deployment_folder }}\-script\'
     delete_archive: yes
     
 # - name: run powershell scripts 
