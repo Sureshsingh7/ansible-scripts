@@ -4,24 +4,24 @@
     path: "{{ deployment_folder }}\\{{ instance_name }}"
   register: deployment_folder_exist
 
-- name: Check whether backup folder exist or not.
-  win_stat:
-    path: "{{ deployment_folder }}\\{{ instance_name }}.bkp"
+#- name: Check whether backup folder exist or not.
+#  win_stat:
+#    path: "{{ deployment_folder }}\\{{ instance_name }}.bkp"
   
-  register: backup_folder_exist
+#  register: backup_folder_exist
   
 
-- name: Delete backup folder if exist.
-  win_file: 
-    path: '{{ deployment_folder }}\{{ instance_name }}.bkp'
-    state: absent
-  when:
-  - backup_folder_exist.stat.exists
-  - deployment_folder_exist.stat.exists
+#- name: Delete backup folder if exist.
+#  win_file: 
+#    path: '{{ deployment_folder }}\{{ instance_name }}.bkp'
+#    state: absent
+#  when:
+#  - backup_folder_exist.stat.exists
+#  - deployment_folder_exist.stat.exists
 
 - name: Replace old folder to backup folder
   win_shell: | 
-    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}.bkp
+    mv {{ deployment_folder }}\{{ instance_name }} {{ deployment_folder }}\{{ instance_name }}.{{ tower_job_id }} 
   when: deployment_folder_exist.stat.exists
 
 - name: Create folder for checkout artifactory 
