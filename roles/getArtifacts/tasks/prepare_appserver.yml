@@ -30,10 +30,10 @@
     Compress-Archive -Path "{{ deployment_folder }}\script\*" -DestinationPath "{{ deployment_folder }}\archive\{{ instance_name }}_{{ tower_job_id }}_bkp.zip " -update -verbose 
   when: python_folder_exist.stat.exists
 
-- name: Create folder for instance 
-  win_file: 
-    path: '{{ deployment_folder }}\script'
-    state: directory
+# - name: Create folder for instance 
+#   win_file: 
+#     path: '{{ deployment_folder }}\script'
+#     state: directory
 
 - name: copy python code zip to deployment folder
   win_copy:
@@ -44,7 +44,7 @@
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
     src: '{{ deployment_folder }}\script\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\-script\'
+    dest: '{{ deployment_folder }}\script\'
     delete_archive: yes
     
 # - name: run powershell scripts 
