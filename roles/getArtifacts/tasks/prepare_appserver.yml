@@ -28,7 +28,7 @@
 - name: Replace old folder to backup folder
   win_shell: | 
     Compress-Archive -Path "{{ deployment_folder }}\script\*" -DestinationPath "{{ deployment_folder }}\archive\{{ instance_name }}_{{ tower_job_id }}_bkp.zip " -update -verbose 
-  when: deployment_folder_exist.stat.exists
+  when: python_folder_exist.stat.exists
 
 - name: Create folder for instance 
   win_file: 
