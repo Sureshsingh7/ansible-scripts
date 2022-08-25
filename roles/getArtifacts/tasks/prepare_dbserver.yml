@@ -1,5 +1,29 @@
-# ---
-# - name: Replace old folder to backup folder
-# - name: copy snowflake code zip to deployment folder
-# - name: unzip the code
-# - name: run powershell scripts 
+---
+- name: Check state of deployment folder for snoflake artifact.
+  win_stat:
+    path: "{{ deployment_folder }}\\build\\ODS_Build"
+  register: snowflake_folder_exist
+
+- name: Replace old folder to backup {{ snowflake_artifacts }} folder 
+  win_shell: | 
+    Compress-Archive -Path "{{ deployment_folder }}\build\*" -DestinationPath "{{ deployment_folder }}\archive\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
+  when: snowflake_folder_exist.stat.exists
+
+- name: Create folder for snowflake artifact copy 
+  win_file: 
+    path: '{{ deployment_folder }}\build'
+    state: directory
+  when: not(snowflake_folder_exist.stat.exists)
+
+- name: copy database code zip to {{ snowflake_artifacts }} deployment folder
+  win_copy:
+    src: '{{ temp_artifactory }}\artifactory\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\script\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    remote_src: yes
+
+- name: Extract war at {{ deployment_folder }}
+  win_unzip:
+    src: '{{ deployment_folder }}\script\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_folder }}\script\'
+    delete_archive: yes
+    
