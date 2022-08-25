@@ -1,7 +1,7 @@
 ---
 - name: debug
   debug:
-    msg: "{{ windows_deployment_folder }} and {{ snowflake_deployment_folder: }}"
+    msg: '{{ windows_deployment_folder }}'
 - name: Check state of deployment folder for windows artifact.
   win_stat:
     path: "{{ windows_deployment_folder }}\\ODS_python"
