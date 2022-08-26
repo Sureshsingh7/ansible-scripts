@@ -3,6 +3,10 @@
 temp_artifactory: 'D:\artifactory_temp'
 deployment_folder: 'D:\Project\GAMODS_DEV'
 instance_name: 'instance1'
+windows_artifacts: "windows_artifacts"
+windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
+snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
+snowflake_artifacts: "snowflake_artifacts"
 snowflake_deployment_folder: '{{ deployment_folder }}\build'
 windows_deployment_folder: '{{ deployment_folder }}\script'
 temp_artifacts: '{{ temp_dir }}\artifacts'

@@ -13,10 +13,6 @@ all:
     ansible_winrm_transport: basic
     ansible_port: 5985
     ansible_winrm_server_cert_validation: ignore
-    windows_artifacts: "windows_artifacts"
-    windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
-    snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
-    snowflake_artifacts: "snowflake_artifacts"
     project_repo_url: 'github.com/Sureshsingh7/Test.git'
     project_branch: 'master'
   
