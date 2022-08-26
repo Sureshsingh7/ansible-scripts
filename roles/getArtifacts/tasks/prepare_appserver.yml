@@ -40,7 +40,7 @@
 
 - name: copy python code zip to {{ windows_artifacts }} deployment folder
   win_copy:
-    src: '{{ temp_artifactory }}\artifactory\{{ windows_artifact_commit }}.zip'
+    src: '{{ temp_artifactory }}\artifactory\{{ windows_artifacts }}\{{ windows_artifact_commit }}.zip'
     dest: '{{ windows_deployment_folder }}\{{ windows_artifact_commit }}.zip'
     remote_src: yes
 
