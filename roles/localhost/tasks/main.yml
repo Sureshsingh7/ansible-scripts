@@ -29,14 +29,14 @@
     # src: "{{ item.path }}"
     # dest: "{{ item.dest }}"
   with_items: 
-  - { path: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}' , dest: '{{ temp_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip' }
-  - { path: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
 
 - name: Including task for commiting artifact to github repo
   include_tasks: commit_artifact.yml
 
-- name: Remove ansible_temp folder
-  win_file:
-    path: '{{ temp_dir }}'
-    state: absent
-    force: yes
+# - name: Remove ansible_temp folder
+#   win_file:
+#     path: '{{ temp_dir }}'
+#     state: absent
+#     force: yes
