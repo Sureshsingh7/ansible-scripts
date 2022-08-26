@@ -5,6 +5,11 @@
 - name: Create artifact folder
   win_file:
     path: '{{ git_checkout_path }}'
+    state: absent
+
+- name: Create artifact folder
+  win_file:
+    path: '{{ git_checkout_path }}'
     state: directory
 
 - name: Clone project directory
