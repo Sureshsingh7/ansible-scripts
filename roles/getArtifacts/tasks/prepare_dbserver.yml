@@ -24,6 +24,6 @@
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
     src: '{{ snowflake_deployment_folder }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_fsnowflake_deployment_folderolder }}\'
+    dest: '{{ snowflake_deployment_folder }}\'
     delete_archive: yes
     
