@@ -29,4 +29,4 @@
   win_file:
     path: {{ temp_artifactory }}
     state: absent
-    force: yes
+  force: yes
