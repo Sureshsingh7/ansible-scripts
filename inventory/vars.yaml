@@ -15,5 +15,8 @@ all:
     ansible_winrm_server_cert_validation: ignore
     windows_artifacts: "windows_artifacts"
     snowflake_artifacts: "snowflake_artifacts"
+    project_repo_url: '/github.com/Sureshsingh7/Test.git'
+    project_branch: 'master'
+    artifact_repo_url: 'github.com/Sureshsingh7/ansible-scripts.git'
 
     # ansible_winrm_transport: kerberos

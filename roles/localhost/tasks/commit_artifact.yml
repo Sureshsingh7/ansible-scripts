@@ -14,7 +14,7 @@
 
 - name: Clone artifact repository from github
   win_shell: |
-    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://github.com/Sureshsingh7/ansible-scripts.git","artifactory","master"
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://{{ artifact_repo_url }}","artifactory","master"
 
 # - name: Creates directories if not available
 #   file:
@@ -38,4 +38,4 @@
     cd '{{ temp_artifacts }}\artifact_server\artifactory'
     git add .
     git commit -m "artifacts added to git repo"
-    git push https://Sureshsingh7:{{ github_token }}@github.com/Sureshsingh7/ansible-scripts.git --all
+    git push https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }} --all
