@@ -14,7 +14,12 @@ all:
     ansible_port: 5985
     ansible_winrm_server_cert_validation: ignore
     project_repo_url: 'github.com/Sureshsingh7/Test.git'
+    artifact_repo_url: 'github.com/Sureshsingh7/ansible-scripts.git'
     project_branch: 'master'
+    windows_artifacts: "windows_artifacts"
+    snowflake_artifacts: "snowflake_artifacts"
+    windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
+    snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
     github_token: !vault |
           $ANSIBLE_VAULT;1.2;AES256;github
           32616234636430323662386433613638306134376462373565366435346430386166343130383963

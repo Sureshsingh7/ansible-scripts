@@ -3,21 +3,8 @@
 git_checkout_path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
 temp_dir: 'D:\ansible_temp'
 temp_artifacts: '{{ temp_dir }}\artifacts'
-windows_artifacts: "windows_artifacts"
-windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
-snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
-snowflake_artifacts: "snowflake_artifacts"
 artifact_copy:
 - {path: '{{ git_checkout_path}}\ODS_python', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_datastore', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_build', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
-
-github_token: !vault |
-          $ANSIBLE_VAULT;1.2;AES256;github
-          32616234636430323662386433613638306134376462373565366435346430386166343130383963
-          3165363836633839656561373531623665323463366431610a626532313430623330323238633161
-          61363631346434303133623635373135366336366165643665623862316463313332633462363532
-          3434653166383636660a356538393364383062396636356463613338373963333137386331633139
-          66383835323636373933373865623465346132373831633162656333373035633035666366343761
-          6162313039393736353066343134393239343633346135336264
