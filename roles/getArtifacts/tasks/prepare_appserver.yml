@@ -40,13 +40,13 @@
 
 - name: copy python code zip to {{ windows_artifacts }} deployment folder
   win_copy:
-    src: '{{ temp_artifactory }}\artifactory\{{ windows_artifacts }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ windows_deployment_folder }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    src: '{{ temp_artifactory }}\artifactory\{{ windows_artifact_commit }}.zip'
+    dest: '{{ windows_deployment_folder }}\{{ windows_artifact_commit }}.zip'
     remote_src: yes
 
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
-    src: '{{ windows_deployment_folder }}\{{ windows_artifacts }}-{{ artifact_version }}.zip'
+    src: '{{ windows_deployment_folder }}\{{ windows_artifact_commit }}.zip'
     dest: '{{ windows_deployment_folder }}\'
     delete_archive: yes
     
