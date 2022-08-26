@@ -19,6 +19,6 @@ all:
     snowflake_artifacts: "snowflake_artifacts"
     project_repo_url: 'github.com/Sureshsingh7/Test.git'
     project_branch: 'master'
-    artifact_repo_url: 'github.com/Sureshsingh7/ansible-scripts.git'
+    artifact_repo_url: "github.com/Sureshsingh7/ansible-scripts.git"
 
     # ansible_winrm_transport: kerberos
