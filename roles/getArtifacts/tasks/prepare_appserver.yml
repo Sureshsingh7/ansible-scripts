@@ -14,7 +14,7 @@
 
 - name: Replace old folder to backup {{ windows_artifacts }} folder 
   win_shell: | 
-    Compress-Archive -Path "{{ windows_deployment_folder }}\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
+    Compress-Archive -Path "{{ windows_deployment_folder }}\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
   when: python_folder_exist.stat.exists
 
 - name: Create folder for instance 
