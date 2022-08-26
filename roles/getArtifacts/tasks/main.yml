@@ -24,3 +24,9 @@
 
 - name: Including task for commiting artifact to github repo
   include_tasks: prepare_dbserver.yml
+
+- name: delete temp directory.
+  win_file:
+    path: {{ temp_artifactory }}
+    state: absent
+    force: yes
