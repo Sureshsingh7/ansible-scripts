@@ -11,19 +11,19 @@
 
 - name: Create folder for snowflake artifact copy 
   win_file: 
-    path: '{{ deployment_folder }}\build'
+    path: '{{ snowflake_deployment_folder }}'
     state: directory
   when: not(snowflake_folder_exist.stat.exists)
 
 - name: copy database code zip to {{ snowflake_artifacts }} deployment folder
   win_copy:
     src: '{{ temp_artifactory }}\artifactory\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\build\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ snowflake_deployment_folder }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
     remote_src: yes
 
 - name: Extract war at {{ deployment_folder }}
   win_unzip:
-    src: '{{ deployment_folder }}\build\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
-    dest: '{{ deployment_folder }}\build\'
+    src: '{{ snowflake_deployment_folder }}\{{ snowflake_artifacts }}-{{ artifact_version }}.zip'
+    dest: '{{ deployment_fsnowflake_deployment_folderolder }}\'
     delete_archive: yes
     

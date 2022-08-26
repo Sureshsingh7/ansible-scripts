@@ -2,14 +2,15 @@
 - name: Check connectivity for all the servers
   win_ping:
 
-# - name: Clone project directory
-#   win_git:
-#     repo: "https://github.com/Sureshsingh7/Test.git"
-#     dest: "D:\\Project\\GAMODS DEV\\Workspace\\onaraya\\AlphaGAMODS75053"
-#     clone: yes
-#     update: yes
-#     branch: master
+- name: Create artifact folder
+  win_file:
+    path: '{{ git_checkout_path }}'
+    state: directory
 
+- name: Clone project directory
+  win_shell: |
+    git clone https://github.com/Sureshsingh7/Test.git -b master {{ git_checkout_path }}
+    
 - name: Create artifact folder
   win_file:
     path: '{{ temp_artifacts }}'
