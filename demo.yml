@@ -2,17 +2,5 @@
 - hosts: appserver
   tasks:
     - name: install winodows
-      win_shell: |
-        D:
-        cd D:\suresh
-        git init
-        echo "git initialised"
-        git config --global credential.helper store
-        echo "credential store configured"
-        # git config --global http.sslbackend schannel
-        # git config --global http.proxy http://@ebswg.bmogc.net:8080/
-        # git config --global https.proxy http://@ebswg.bmogc.net:8080/
-        echo "git remote add initialised"
-        git remote add origin https://github.com/Sureshsingh7/ansible-scripts.git
-        echo "Pull started"
-        git pull origin master
+      command: "whoami"
+    
