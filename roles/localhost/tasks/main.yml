@@ -9,7 +9,7 @@
 
 - name: Clone project directory
   win_shell: |
-    git clone https://github.com/Sureshsingh7/Test.git -b master {{ git_checkout_path }}
+    git clone https://github.com/Sureshsingh7/Test.git --branch master {{ git_checkout_path }}
     
 - name: Create artifact folder
   win_file:
