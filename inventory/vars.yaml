@@ -17,7 +17,7 @@ all:
     windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
     snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
     snowflake_artifacts: "snowflake_artifacts"
-    project_repo_url: '/github.com/Sureshsingh7/Test.git'
+    project_repo_url: 'github.com/Sureshsingh7/Test.git'
     project_branch: 'master'
     artifact_repo_url: 'github.com/Sureshsingh7/ansible-scripts.git'
 
