@@ -34,7 +34,7 @@
     # src: "{{ item.path }}"
     # dest: "{{ item.dest }}"
   with_items: 
-  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
   - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
 
 - name: Including task for commiting artifact to github repo
