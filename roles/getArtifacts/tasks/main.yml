@@ -27,5 +27,5 @@
 
 - name: delete temp directory.
   win_file:
-    path: {{ temp_artifactory }}
+    path: '{{ temp_artifactory }}'
     state: absent
