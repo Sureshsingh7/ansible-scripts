@@ -12,22 +12,6 @@
     path: '{{ deployment_folder }}\archive'
     state: directory
 
-
-#- name: Check whether backup folder exist or not.
-#  win_stat:
-#    path: "{{ deployment_folder }}\\{{ instance_name }}.bkp"
-  
-#  register: backup_folder_exist
-  
-
-#- name: Delete backup folder if exist.
-#  win_file: 
-#    path: '{{ deployment_folder }}\{{ instance_name }}.bkp'
-#    state: absent
-#  when:
-#  - backup_folder_exist.stat.exists
-#  - deployment_folder_exist.stat.exists
-
 - name: Replace old folder to backup {{ windows_artifacts }} folder 
   win_shell: | 
     Compress-Archive -Path "{{ windows_deployment_folder }}\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
@@ -50,4 +34,3 @@
     dest: '{{ windows_deployment_folder }}\'
     delete_archive: yes
     
-# - name: run powershell scripts 

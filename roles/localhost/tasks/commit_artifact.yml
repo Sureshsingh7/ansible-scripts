@@ -16,14 +16,6 @@
   win_shell: |
     Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://{{ artifact_repo_url }}","artifactory","master"
 
-# - name: Creates directories if not available
-#   file:
-#     path: "{{ item }}"
-#     state: directory
-#   with_items:
-#   - 'roles/localhost/files/artifact_server/{{ windows_artifacts }}'
-#   - 'roles/localhost/files/artifact_server/{{ snowflake_artifacts }}'
-
 - name: Copying artifacts to github repo
   win_copy:
       src: "{{ item.src }}"

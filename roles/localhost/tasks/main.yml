@@ -31,8 +31,7 @@
 - name: perform Zip operation
   win_shell: |
     Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
-    # src: "{{ item.path }}"
-    # dest: "{{ item.dest }}"
+
   with_items: 
   - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
   - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
