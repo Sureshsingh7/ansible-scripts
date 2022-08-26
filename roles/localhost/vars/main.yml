@@ -2,11 +2,7 @@
 # vars file for localhost
 git_checkout_path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
 temp_dir: 'D:\ansible_temp'
-windows_artifacts: 'windows_artifacts'
-snowflake_artifacts: 'snowflake_artifacts'
 temp_artifacts: '{{ temp_dir }}\artifacts'
-windows_artifact_commit: '{{ windows_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
-snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ artifact_version }}_{{ tower_job_id }}'
 artifact_copy:
 - {path: '{{ git_checkout_path}}\ODS_python', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
