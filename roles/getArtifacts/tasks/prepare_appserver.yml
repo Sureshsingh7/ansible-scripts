@@ -12,6 +12,11 @@
     path: '{{ deployment_folder }}\archive'
     state: directory
 
+- name: Creating {{ deployment_folder }}\archive\{{ windows_artifacts }} 
+  win_file:
+    path: '{{ deployment_folder }}\archive\{{ windows_artifacts }}'
+    state: directory
+
 - name: Replace old folder to backup {{ windows_artifacts }} folder 
   win_shell: | 
     Compress-Archive -Path "{{ windows_deployment_folder }}\*" -DestinationPath "{{ deployment_folder }}\archive\{{ windows_artifacts }}\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip" -update -verbose 
