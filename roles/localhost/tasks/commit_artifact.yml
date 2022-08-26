@@ -14,7 +14,7 @@
 
 - name: Clone artifact repository from github
   win_shell: |
-    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://{{ artifact_repo_url }}","artifactory","master"
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
 
 - name: Copying artifacts to github repo
   win_copy:
