@@ -6,5 +6,5 @@ instance_name: 'instance1'
 snowflake_deployment_folder: '{{ deployment_folder }}\build'
 windows_deployment_folder: '{{ deployment_folder }}\script'
 temp_artifacts: '{{ temp_dir }}\artifacts'
-artifact_repo_url: "github.com/Sureshsingh7/ansible-scripts.git"
+
 
