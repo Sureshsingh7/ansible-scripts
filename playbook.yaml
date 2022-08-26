@@ -4,8 +4,8 @@
   roles:
     - localhost
 
-# - hosts: appserver
-#   gather_facts: False
-#   roles:
-#     - getArtifacts
+- hosts: appserver
+  gather_facts: False
+  roles:
+    - getArtifacts
 
