@@ -1,0 +1,4 @@
+---
+- name: Execute powershell script
+  win_shell: |
+    write-host "powershell script to be executed here"

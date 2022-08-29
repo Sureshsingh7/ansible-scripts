@@ -2,5 +2,7 @@
 - hosts: appserver
   tasks:
     - name: install winodows
-      command: "whoami"
+      win_shell: |       
+        write-host {{ windows_artifacts }}
+      args: "-abc {{ windows_artifacts }}"
     
