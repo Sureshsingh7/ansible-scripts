@@ -16,7 +16,7 @@
   win_shell: |
     Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "{{ temp_artifacts }}\artifact_server","https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
   args:
-    chdir: '{{ temp_artifacts }}\artifact_server '
+    chdir: '{{ temp_artifacts }}\artifact_server'
 
 - name: Copying artifacts to github repo
   win_copy:
