@@ -1,7 +1,4 @@
 ---
-- name: debug
-  debug:
-    msg: '{{ windows_deployment_folder }}'
 - name: Check state of deployment folder for windows artifact.
   win_stat:
     path: "{{ windows_deployment_folder }}\\ODS_python"
@@ -33,7 +30,7 @@
     dest: '{{ windows_deployment_folder }}\{{ windows_artifact_commit }}.zip'
     remote_src: yes
 
-- name: Extract war at {{ deployment_folder }}
+- name: Extract artifact zip at {{ windows_deployment_folder }}
   win_unzip:
     src: '{{ windows_deployment_folder }}\{{ windows_artifact_commit }}.zip'
     dest: '{{ windows_deployment_folder }}\'
