@@ -8,23 +8,30 @@
   fail:
     msg: 'Execution failed due to {{ token_replace_script_path}} does not exist'
   when: not script_exist.stat.exists
+  
+- name: Execute token replacement scripts for windows and snowflakes
+  block:
+    - name: Executing '{{ token_replace_script_path }}'
+      win_shell: |
+        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
+      register: snowflake_token_replace_output
 
-- name: Executing '{{ token_replace_script_path }}'
-  win_shell: |
-    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
-  register: snowflake_token_replace_output
+    - name: Mark status to fail for snowflake token replacement script
+      fail:
+        msg: 'script failed due to {{ snowflake_token_replace_output }}'
+      when: snowflake_token_replace_output.stderr!=""
 
-- name: Rollback the challenges if script failed
-  debug:
-    msg: "{{ snowflake_token_replace_output.stderr }}"  
-  when: snowflake_token_replace_output.stderr!=""
+    - name: Executing '{{ token_replace_script_path }} for batch scripts'
+      win_shell: |
+        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
+      register: windows_token_replace_output
 
-- name: Executing '{{ token_replace_script_path }} for batch scripts'
-  win_shell: |
-    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
-  register: windows_token_replace_output
-
-- name: Rollback the challenges if script failed
-  debug:
-    msg: "{{ windows_token_replace_output.stderr }}"  
-  when: windows_token_replace_output.stderr!=""
+    - name: Mark status to fail for bat token replacement script
+      fail:
+        msg: 'script failed due to {{ snowflake_token_replace_output }}'
+      when: windows_token_replace_output.stderr!=""  
+  rescue:
+    - name: Rollback the challenges if any of the script failed
+      debug:
+        msg: FAILED
+     
