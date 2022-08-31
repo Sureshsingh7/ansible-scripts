@@ -1,4 +1,21 @@
 ---
-- name: Execute powershell script
+- name: Check whether script exist or not
+  win_stat:
+    path: '{{ snwoflake_token_replace_script_path}}'
+  register: script_exist
+
+- name: Fail if script is not present
+  fail:
+    msg: 'Execution failed due to {{ snwoflake_token_replace_script_path}} does not exist'
+  when: not script_exist.stat.exists
+
+- name: Executing '{{ snowflake_deployment_folder }}\ODS_build\replace_token.ps1'
   win_shell: |
-    write-host "powershell script to be executed here"
+    & {{ snwoflake_token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
+  when: script_exist.stat.exists
+  register: snowflake_token_replace_output
+
+- name: Rollback the challenges if script failed
+  debug:
+    msg: "{{ snowflake_token_replace_output.stderr }}"  
+  when: snowflake_token_replace_output.stderr!=""
