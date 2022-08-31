@@ -12,8 +12,8 @@
   fail:
     msg: 'Execution failed due to backup folder does not exist, You need to rollback the deployment manually'
   when: 
-  - windows_backup_folder_exist.stat.exists
-  - snowflake_backup_folder_exist.stat.exists  
+  - not windows_backup_folder_exist.stat.exists
+  - not snowflake_backup_folder_exist.stat.exists  
 
 - name: Remove new deployment folders
   win_file: 
