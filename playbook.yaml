@@ -1,8 +1,8 @@
 ---
-- hosts: appserver
-  gather_facts: False
-  roles:
-    - localhost
+# - hosts: appserver
+#   gather_facts: False
+#   roles:
+#     - localhost
 
 - hosts: appserver
   gather_facts: False
