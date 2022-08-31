@@ -47,5 +47,5 @@
     path: '{{ deployment_folder }}\archive\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
     state: absent
 
-- name: Including task for commiting artifact to github repo
+- name: Including task to re run the deployment scripts
   include_tasks: execute_script.yml
