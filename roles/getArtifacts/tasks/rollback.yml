@@ -5,7 +5,7 @@
 
 - name: Check whether backup folder present or not
   win_stat:
-    path: '{{ deployment_folder }}\archive\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    path: '{{ deployment_folder }}\Archives\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
   register: snowflake_backup_folder_exist 
 
 - name: Fail if backup folder does not exist
@@ -44,7 +44,7 @@
 
 - name: Delete snowflake artifact backup zip 
   win_file: 
-    path: '{{ deployment_folder }}\archive\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    path: '{{ deployment_folder }}\Archives\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
     state: absent
 
 - name: Including task to re run the deployment scripts
