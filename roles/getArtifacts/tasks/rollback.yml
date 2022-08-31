@@ -1,0 +1,51 @@
+- name: Check whether windows backup folder present or not
+  win_stat:
+    path: '{{ deployment_folder }}\Archives\{{ windows_artifacts }}\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip'
+  register: windows_backup_folder_exist
+
+- name: Check whether backup folder present or not
+  win_stat:
+    path: '{{ deployment_folder }}\archive\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
+  register: snowflake_backup_folder_exist 
+
+- name: Fail if backup folder does not exist
+  fail:
+    msg: 'Execution failed due to backup folder does not exist, You need to rollback the deployment manually'
+  when: 
+  - not windows_backup_folder_exist.stat.exists
+  - snowflake_backup_folder_exist.stat.exists  
+
+- name: Remove new deployment folders
+  win_file: 
+    path: '{{ item }}'
+    state: directory
+  with_items: 
+    - '{{ windows_deployment_folder }}\ODS_python'
+    - '{{ windows_deployment_folder }}\ODS_batch'
+    - '{{ snowflake_deployment_folder }}\ODS_datastore'
+    - '{{ snowflake_deployment_folder }}\ODS_build'
+    
+- name: unzip windows artifact backup archive from archives folder 
+  win_unzip:
+    src: '{{ deployment_folder }}\Archives\{{ windows_artifacts }}\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    dest: '{{ windows_deployment_folder }}\'
+    delete_archive: yes
+
+- name: unzip snowflake artifact backup archive from archives folder 
+  win_unzip:
+    src: '{{ deployment_folder }}\Archives\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    dest: '{{ snowflake_deployment_folder }}\'
+    delete_archive: yes
+
+- name: Delete windows artifact backup zip
+  win_file: 
+    path: '{{ deployment_folder }}\Archives\{{ windows_artifacts }}\{{ windows_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    state: absent
+
+- name: Delete snowflake artifact backup zip 
+  win_file: 
+    path: '{{ deployment_folder }}\archive\{{ snowflake_artifacts }}\{{ snowflake_artifacts }}_{{ tower_job_id }}_bkp.zip'
+    state: absent
+
+- name: Including task for commiting artifact to github repo
+  include_tasks: execute_script.yml
