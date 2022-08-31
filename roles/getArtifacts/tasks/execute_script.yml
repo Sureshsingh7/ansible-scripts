@@ -23,7 +23,7 @@
 
     - name: Executing '{{ token_replace_script_path }} for batch scripts'
       win_shell: |
-        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}' | Out-File -FilePath Process.txt
+        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}' | write-error "error"
       register: windows_token_replace_output
 
     - name: Mark status to fail for bat token replacement script
