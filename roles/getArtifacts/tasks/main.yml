@@ -21,13 +21,13 @@
   debug:
     msg: '{{ stderr }}'
 
-- name: Including task for commiting artifact to github repo
+- name: Including task for preparing the {{ windows_artifacts }} in server
   include_tasks: prepare_appserver.yml
 
-- name: Including task for commiting artifact to github repo
+- name:  Including task for preparing the {{ snowflake_artifacts }} in server
   include_tasks: prepare_dbserver.yml
 
-- name: Including task for commiting artifact to github repo
+- name: Including task for executing the scripts
   include_tasks: execute_script.yml
 
 - name: delete temp directory.
