@@ -1,36 +1,36 @@
 ---
-# - name: Create folder for checkout artifactory 
-#   win_file: 
-#     path: "{{ temp_artifactory }}"
-#     state: directory
+- name: Create folder for checkout artifactory 
+  win_file: 
+    path: "{{ temp_artifactory }}"
+    state: directory
 
-# - name: Copy bat file
-#   win_copy:
-#     src: "sparse-checkout.bat"
-#     dest: '{{ temp_artifactory }}\'
-#     force: yes
+- name: Copy bat file
+  win_copy:
+    src: "sparse-checkout.bat"
+    dest: '{{ temp_artifactory }}\'
+    force: yes
 
-# - name: Clone artifact repository from github
-#   win_shell: |
-#     Start-Process -FilePath "{{ temp_artifactory }}\sparse-checkout.bat" -Wait -NoNewWindow -Args 'https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}',"artifactory","master"
-#   register: stderr
-#   args:
-#     chdir: '{{ temp_artifactory }}'
+- name: Clone artifact repository from github
+  win_shell: |
+    Start-Process -FilePath "{{ temp_artifactory }}\sparse-checkout.bat" -Wait -NoNewWindow -Args 'https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}',"artifactory","master"
+  register: stderr
+  args:
+    chdir: '{{ temp_artifactory }}'
 
-# - name: debug
-#   debug:
-#     msg: '{{ stderr }}'
+- name: debug
+  debug:
+    msg: '{{ stderr }}'
 
-# - name: Including task for commiting artifact to github repo
-#   include_tasks: prepare_appserver.yml
+- name: Including task for commiting artifact to github repo
+  include_tasks: prepare_appserver.yml
 
-# - name: Including task for commiting artifact to github repo
-#   include_tasks: prepare_dbserver.yml
+- name: Including task for commiting artifact to github repo
+  include_tasks: prepare_dbserver.yml
 
 - name: Including task for commiting artifact to github repo
   include_tasks: execute_script.yml
 
-# - name: delete temp directory.
-#   win_file:
-#     path: '{{ temp_artifactory }}'
-#     state: absent
+- name: delete temp directory.
+  win_file:
+    path: '{{ temp_artifactory }}'
+    state: absent
