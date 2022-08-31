@@ -10,3 +10,7 @@ snowflake_config_file_path: '{{ snowflake_deployment_folder }}\ODS_build\Config.
 ODS_Batch_path: '{{ windows_deployment_folder }}\ODS_Batch'
 ODS_datastore_path: '{{ snowflake_deployment_folder }}\ODS_Datastore'
 deployment_environment: 'DEV1'
+snowflake_deployment_script_path: '{{ snowflake_deployment_folder }}\ODS_build\Snowflake_Deployment.ps1'
+snowflake_deployment_config_json: ' {{ snowflake_deployment_folder }}\ODS_build\config_snowflake.json'
+snowflake_deployment_output_path: './Snowsql_execution_logs.txt'
+snowflake_deployment_account_name: 'abc'

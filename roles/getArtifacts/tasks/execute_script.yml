@@ -18,7 +18,7 @@
 
     - name: Mark status to fail for snowflake token replacement script
       fail:
-        msg: 'script failed due to {{ snowflake_token_replace_output }}'
+        msg: 'script failed due to {{ snowflake_token_replace_output.stderr }}'
       when: snowflake_token_replace_output.stderr!=""
 
     - name: Executing '{{ token_replace_script_path }} for batch scripts'
@@ -28,8 +28,19 @@
 
     - name: Mark status to fail for bat token replacement script
       fail:
-        msg: 'script failed due to {{ snowflake_token_replace_output }}'
+        msg: 'script failed due to {{ snowflake_token_replace_output.stderr }}'
       when: windows_token_replace_output.stderr!=""  
+
+    - name: Executing '{{ snowflake_deployment_script_path }} for snowflake deployment'
+      win_shell: |
+        & {{ snowflake_deployment_script_path }} -configFile {{ snowflake_deployment_config_json }} -basePath {{ ODS_datastore_path }} -env '{{ deployment_environment }}' -outputPath {{ snowflake_deployment_output_path }} -accountName {{ snowflake_deployment_account_name }}
+      become: true
+      register: snowflake_deployment_replace_output
+
+    - name: Mark status to fail for bat token replacement script
+      fail:
+        msg: 'script failed due to {{ snowflake_deployment_replace_output.stderr }}'
+      when: snowflake_deployment_replace_output.stderr!=""  
   rescue:
     - name: Rollback the challenges if any of the script failed
       include_tasks: rollback.yml
