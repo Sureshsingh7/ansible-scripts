@@ -21,7 +21,7 @@
 
 - name: Executing '{{ token_replace_script_path }} for batch scripts'
   win_shell: |
-    & {{ snwoflake_token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
+    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
   register: windows_token_replace_output
 
 - name: Rollback the challenges if script failed
