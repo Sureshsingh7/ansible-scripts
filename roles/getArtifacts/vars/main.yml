@@ -7,7 +7,6 @@ windows_deployment_folder: '{{ deployment_folder }}\script'
 temp_artifacts: '{{ temp_dir }}\artifacts'
 snwoflake_token_replace_script_path: '{{ snowflake_deployment_folder }}\ODS_build\replace_token.ps1'
 snowflake_config_file_path: '{{ snowflake_deployment_folder }}\ODS_build\Config.CSV'
-ODS_datastore_path: '{{ snowflake_deployment_folder }}\ODS_datastore'
+ODS_Batch_path: '{{ windows_deployment_folder }}\ODS_Batch'
+ODS_datastore_path: '{{ snowflake_deployment_folder }}\ODS_Datastore'
 deployment_environment: 'DEV1'
-
-
