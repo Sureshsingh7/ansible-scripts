@@ -11,7 +11,7 @@
 
 - name: Executing '{{ snowflake_deployment_folder }}\ODS_build\replace_token.ps1'
   win_shell: |
-    & {{ snwoflake_token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'| Out-File -FilePath D:\logs.txt
+    & {{ snwoflake_token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
   when: script_exist.stat.exists
   register: snowflake_token_replace_output
 
