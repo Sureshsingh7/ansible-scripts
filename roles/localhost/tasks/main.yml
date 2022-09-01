@@ -40,7 +40,7 @@
 
 - name: Execute token replacement scripts for windows and snowflakes
   include_tasks: build_artifact.yml
-  with_items: '{{ environment_name }}'
+  loop: "{{ lookup('vars', environment_name) }}"
 
 
 # # - name: Including task for commiting artifact to github repo
