@@ -14,7 +14,7 @@
   win_shell: |
     Compress-Archive -Path "{{ aritafact_path.path }}/*" -DestinationPath "{{ aritafact_path.dest }}" -update -verbose
   with_items: 
-  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
-  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}-{{ environment_name }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}-{{ environment_name }}.zip' }
   loop_control:
     loop_var: aritafact_path

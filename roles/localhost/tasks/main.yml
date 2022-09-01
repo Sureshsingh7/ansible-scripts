@@ -35,7 +35,7 @@
 
 - name: set environment name array environment
   set_fact:
-    environment_name: "{{ deployment_environment_array }}}"
+    environment_name: "{{ deployment_environment_array }}"
   when: env_type=='ALL'
 
 - name: Execute token replacement scripts for windows and snowflakes
