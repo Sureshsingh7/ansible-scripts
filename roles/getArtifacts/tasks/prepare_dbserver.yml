@@ -22,13 +22,13 @@
 
 - name: copy database code zip to {{ snowflake_artifacts }} deployment folder
   win_copy:
-    src: '{{ temp_artifactory }}\artifactory\{{ snowflake_artifacts }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip'
-    dest: '{{ snowflake_deployment_folder }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip'
+    src: '{{ temp_artifactory }}\artifactory\{{ snowflake_artifacts }}\{{ snowflake_artifact_commit }}-{{ env_type }}.zip'
+    dest: '{{ snowflake_deployment_folder }}\{{ snowflake_artifact_commit }}-{{ env_type }}.zip'
     remote_src: yes
 
 - name: Extract {{ snowflake_artifacts }} at {{ snowflake_deployment_folder }}
   win_unzip:
-    src: '{{ snowflake_deployment_folder }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip'
+    src: '{{ snowflake_deployment_folder }}\{{ snowflake_artifact_commit }}-{{ env_type }}.zip'
     dest: '{{ snowflake_deployment_folder }}\'
     delete_archive: yes
     
