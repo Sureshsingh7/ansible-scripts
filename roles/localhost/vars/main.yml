@@ -11,6 +11,7 @@ artifact_copy:
 token_replace_script_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\replace_token.ps1'
 snowflake_config_file_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\Config.CSV'
 ODS_Batch_path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}\ODS_Batch'
+ODS_datastore_path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}\ODS_Datastore'
 deployment_environment_array: 
 - 'DEV2'
 - 'QA'
