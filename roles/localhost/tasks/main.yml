@@ -44,6 +44,32 @@
   loop_control:
     loop_var: env_name
 
+- name: Creates directories if not available for artifactory checkout
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - '{{ temp_artifacts }}\artifact_server'
+
+- name: Copy bat file for sparse checkout
+  win_copy:
+    src: "sparse-checkout.bat"
+    dest: '{{ temp_artifacts }}\artifact_server\'
+    force: yes
+
+- name: Clone artifact repository from github
+  win_shell: |
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
+  args:
+    chdir: '{{ temp_artifacts }}\artifact_server'
+
+- name: commit artifacts to github
+  win_shell: |
+    cd '{{ temp_artifacts }}\artifact_server\artifactory'
+    git add .
+    git commit -m "artifacts added to git repo"
+    git push https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }} --all
+
 
 # # - name: Including task for commiting artifact to github repo
 # #   include_tasks: commit_artifact.yml

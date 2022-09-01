@@ -20,3 +20,14 @@
   - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip' }
   loop_control:
     loop_var: aritafact_path
+
+- name: Copying artifacts to github repo
+  win_copy:
+      src: "{{ artifactory_copy_zip.src }}"
+      dest: "{{ artifactory_copy_zip.dest }}"
+      remote_src: yes
+  with_items:
+    - { src: '{{ temp_artifacts }}\{{ windows_artifact_commit }}-{{ env_name }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\windows_artifacts\{{ windows_artifact_commit }}-{{ env_name }}.zip' }
+    - { src: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip', dest: '{{ temp_artifacts }}\artifact_server\artifactory\snowflake_artifacts\{{ snowflake_artifact_commit }}-{{ env_name }}.zip' }
+  loop_control:
+    loop_var: artifactory_copy_zip

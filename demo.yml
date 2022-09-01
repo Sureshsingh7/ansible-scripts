@@ -9,8 +9,10 @@
           - PROD
     - name: test var
       debug:
-        msg: "{{ item }}"
-      with_items: '{{ ALL_ENV }}'
+        msg: "state: {{ item.0 }}; path: {{ item.1 }}"
+      with_nested: 
+      - [ SURESH,'RAMESH {{ item.1 }}' ]
+      - [4,5,6]
 
 
 
