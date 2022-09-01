@@ -8,3 +8,8 @@ artifact_copy:
 - {path: '{{ git_checkout_path}}\ODS_batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_datastore', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_build', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
+deployment_environment_array: 
+- 'DEV2'
+- 'QA'
+- 'UAT'
+- 'Prod'

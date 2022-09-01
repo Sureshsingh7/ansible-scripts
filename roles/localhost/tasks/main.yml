@@ -26,21 +26,44 @@
       src: "{{ item.path }}"     
       dest: "{{ item.dest }}"
       remote_src: yes
-  loop: '{{ artifact_copy }}'
-  
-- name: perform Zip operation
-  win_shell: |
-    Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
+  loop: '{{ artifact_copy }}'   
 
-  with_items: 
-  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
-  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+- name: set environment name  for {{ environment }} environment
+  set_fact:
+    environment_name: "{{ environment }}"
+  when: environment!='ALL'
 
-- name: Including task for commiting artifact to github repo
-  include_tasks: commit_artifact.yml
+- name: set environment name array environment
+  set_fact:
+    environment_name: "{{ deployment_environment_array }}}"
+  when: environment=='ALL'
 
-- name: Remove ansible_temp folder
-  win_file:
-    path: '{{ temp_dir }}'
-    state: absent
-    force: yes
+- name: Execute token replacement scripts for windows and snowflakes
+  block:
+    - name: Executing '{{ token_replace_script_path }}'
+      win_shell: |
+        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
+      register: snowflake_token_replace_output
+    
+    - name: Executing '{{ token_replace_script_path }} for batch scripts'
+      win_shell: |
+        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
+      register: windows_token_replace_output
+
+    - name: perform Zip operation
+      win_shell: |
+        Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
+      with_items: 
+      - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
+      - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+  with_items: '{{ environment_name }}'
+
+
+# # - name: Including task for commiting artifact to github repo
+# #   include_tasks: commit_artifact.yml
+
+# - name: Remove ansible_temp folder
+#   win_file:
+#     path: '{{ temp_dir }}'
+#     state: absent
+#     force: yes

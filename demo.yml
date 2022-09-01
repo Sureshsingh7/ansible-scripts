@@ -1,8 +1,17 @@
 ---
 - hosts: appserver
   tasks:
-    - name: install winodows
-      win_shell: |       
-        write-host {{ windows_artifacts }}
-      args: "-abc {{ windows_artifacts }}"
+    - name: Register a var
+      set_fact:
+        ALL_ENV:
+          - DEV
+          - QA
+          - PROD
+    - name: test var
+      debug:
+        msg: "{{ item }}"
+      with_items: '{{ ALL_ENV }}'
+
+
+
     
