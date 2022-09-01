@@ -38,12 +38,6 @@
     environment_name: "{{ deployment_environment_array }}"
   when: env_type=='ALL'
 
-- name: Execute token replacement scripts for windows and snowflakes
-  include_tasks: build_artifact.yml
-  with_items: '{{ environment_name }}'
-  loop_control:
-    loop_var: env_name
-
 - name: Creates directories if not available for artifactory checkout
   win_file:
     path: "{{ item }}"
@@ -62,6 +56,12 @@
     Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
   args:
     chdir: '{{ temp_artifacts }}\artifact_server'
+
+- name: Execute token replacement scripts for windows and snowflakes
+  include_tasks: build_artifact.yml
+  with_items: '{{ environment_name }}'
+  loop_control:
+    loop_var: env_name
 
 - name: commit artifacts to github
   win_shell: |
