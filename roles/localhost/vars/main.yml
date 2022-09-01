@@ -8,6 +8,9 @@ artifact_copy:
 - {path: '{{ git_checkout_path}}\ODS_batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_datastore', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
 - {path: '{{ git_checkout_path}}\ODS_build', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
+token_replace_script_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\replace_token.ps1'
+snowflake_config_file_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\Config.CSV'
+ODS_Batch_path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}\ODS_Batch'
 deployment_environment_array: 
 - 'DEV2'
 - 'QA'
