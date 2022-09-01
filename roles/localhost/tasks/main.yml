@@ -28,35 +28,19 @@
       remote_src: yes
   loop: '{{ artifact_copy }}'   
 
-- name: set environment name  for {{ environment }} environment
+- name: set environment name  for {{ env_type }} environment
   set_fact:
-    environment_name: "{{ environment }}"
-  when: environment!='ALL'
+    environment_name: "{{ env_type }}"
+  when: env_type!='ALL'
 
 - name: set environment name array environment
   set_fact:
     environment_name: "{{ deployment_environment_array }}}"
-  when: environment=='ALL'
+  when: env_type=='ALL'
 
 - name: Execute token replacement scripts for windows and snowflakes
-  block:
-    - name: Executing '{{ token_replace_script_path }}'
-      win_shell: |
-        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
-      register: snowflake_token_replace_output
-    
-    - name: Executing '{{ token_replace_script_path }} for batch scripts'
-      win_shell: |
-        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
-      register: windows_token_replace_output
-
-    - name: perform Zip operation
-      win_shell: |
-        Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
-      with_items: 
-      - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
-      - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
-  # with_items: '{{ environment_name }}'
+  include_tasks: build_artifact.yml
+  with_items: '{{ environment_name }}'
 
 
 # # - name: Including task for commiting artifact to github repo

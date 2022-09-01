@@ -1,0 +1,18 @@
+---
+
+- name: Executing '{{ token_replace_script_path }}'
+  win_shell: |
+    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ environment_name }}'
+  register: snowflake_token_replace_output
+
+- name: Executing '{{ token_replace_script_path }} for batch scripts'
+  win_shell: |
+    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ environment_name }}'
+  register: windows_token_replace_output
+
+- name: perform Zip operation
+  win_shell: |
+    Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
+  with_items: 
+  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
