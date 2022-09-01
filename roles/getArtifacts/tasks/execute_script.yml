@@ -10,27 +10,7 @@
   when: not script_exist.stat.exists
 
 - name: Execute token replacement scripts for windows and snowflakes
-  block:
-    - name: Executing '{{ token_replace_script_path }}'
-      win_shell: |
-        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ deployment_environment }}'
-      register: snowflake_token_replace_output
-
-    - name: Mark status to fail for snowflake token replacement script
-      fail:
-        msg: 'script failed due to {{ snowflake_token_replace_output.stderr }}'
-      when: snowflake_token_replace_output.stderr!=""
-
-    - name: Executing '{{ token_replace_script_path }} for batch scripts'
-      win_shell: |
-        & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
-      register: windows_token_replace_output
-
-    - name: Mark status to fail for bat token replacement script
-      fail:
-        msg: 'script failed due to {{ snowflake_token_replace_output.stderr }}'
-      when: windows_token_replace_output.stderr!=""  
-
+  block:    
     - name: Executing '{{ snowflake_deployment_script_path }} for snowflake deployment'
       win_shell: |
         & {{ snowflake_deployment_script_path }} -configFile {{ snowflake_deployment_config_json }} -basePath {{ ODS_datastore_path }} -env '{{ deployment_environment }}' -outputPath {{ snowflake_deployment_output_path }} -accountName {{ snowflake_deployment_account_name }}
