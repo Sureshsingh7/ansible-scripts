@@ -68,7 +68,6 @@
     git commit -m "artifacts added to git repo"
     git push https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }} --all
 
-
 - name: Remove ansible_temp folder
   win_file:
     path: '{{ temp_dir }}'
