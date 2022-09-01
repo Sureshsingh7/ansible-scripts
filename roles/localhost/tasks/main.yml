@@ -50,13 +50,13 @@
         & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ deployment_environment }}'
       register: windows_token_replace_output
 
-    # - name: perform Zip operation
-    #   win_shell: |
-    #     Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
-    #   with_items: 
-    #   - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
-    #   - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
-  with_items: '{{ environment_name }}'
+    - name: perform Zip operation
+      win_shell: |
+        Compress-Archive -Path "{{ item.path }}/*" -DestinationPath "{{ item.dest }}" -update -verbose
+      with_items: 
+      - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}.zip' }
+      - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}.zip' }
+  # with_items: '{{ environment_name }}'
 
 
 # # - name: Including task for commiting artifact to github repo
