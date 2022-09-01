@@ -1,5 +1,7 @@
 ---
-
+- name: name of the 
+  debug:
+    msg: '{{environment_name}}'
 - name: Executing '{{ token_replace_script_path }}'
   win_shell: |
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ environment_name }}'
