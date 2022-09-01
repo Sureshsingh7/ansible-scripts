@@ -26,13 +26,6 @@
     path: '{{ temp_artifacts }}'
     state: directory
     
-- name: Getting artifacts to create folder for {{ windows_artifacts }} and {{ snowflake_artifacts }}
-  win_copy:
-      src: "{{ item.path }}"     
-      dest: "{{ item.dest }}"
-      remote_src: yes
-  loop: '{{ artifact_copy }}'   
-
 - name: setting up environment name for {{ env_type }}
   set_fact:
     environment_name: "{{ env_type }}"

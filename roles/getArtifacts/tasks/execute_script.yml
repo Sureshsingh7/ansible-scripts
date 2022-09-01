@@ -6,7 +6,7 @@
 
 - name: Fail if script is not present
   fail:
-    msg: 'Execution failed due to {{ token_replace_script_path}} does not exist'
+    msg: 'Execution failed due to {{ token_replace_script_path }} does not exist'
   when: not script_exist.stat.exists
 
 - name: Execute token replacement scripts for windows and snowflakes

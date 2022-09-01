@@ -1,4 +1,11 @@
 ---
+- name: Getting artifacts to create folder for {{ windows_artifacts }} and {{ snowflake_artifacts }}
+  win_copy:
+      src: "{{ item.path }}"     
+      dest: "{{ item.dest }}"
+      remote_src: yes
+      force: yes
+  loop: '{{ artifact_copy }}'   
 - name: Executing {{ token_replace_script_path }} for {{ env_name }} environments snowlfake floder.
   win_shell: |
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ env_name }}'
