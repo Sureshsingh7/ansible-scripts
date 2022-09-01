@@ -1,22 +1,22 @@
 ---
 - name: name of the 
   debug:
-    msg: '{{environment_name}}'
+    msg: '{{env_name}}'
 - name: Executing '{{ token_replace_script_path }}'
   win_shell: |
-    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ environment_name }}'
+    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ env_name }}'
   register: snowflake_token_replace_output
 
 - name: Executing '{{ token_replace_script_path }} for batch scripts'
   win_shell: |
-    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ environment_name }}'
+    & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ env_name }}'
   register: windows_token_replace_output
 
 - name: perform Zip operation
   win_shell: |
     Compress-Archive -Path "{{ aritafact_path.path }}/*" -DestinationPath "{{ aritafact_path.dest }}" -update -verbose
   with_items: 
-  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}-{{ environment_name }}.zip' }
-  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}-{{ environment_name }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' , dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}-{{ env_name }}.zip' }
+  - { path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}-{{ env_name }}.zip' }
   loop_control:
     loop_var: aritafact_path
