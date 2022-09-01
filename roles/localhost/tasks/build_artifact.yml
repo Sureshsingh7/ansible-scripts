@@ -1,18 +1,14 @@
 ---
-- name: name of the 
-  debug:
-    msg: '{{env_name}}'
-- name: Executing '{{ token_replace_script_path }}'
-  win_shell: |
+- name: Executing '{{ token_replace_script_path }}' for {{ env_name }} environment's snowlfake floder.
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ env_name }}'
   register: snowflake_token_replace_output
 
-- name: Executing '{{ token_replace_script_path }} for batch scripts'
+- name: Executing '{{ token_replace_script_path }} for {{ env_name }} environment's windows floder'
   win_shell: |
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ env_name }}'
   register: windows_token_replace_output
 
-- name: perform Zip operation
+- name: perform Zip operation to compress artifact of {{ env_name }}environment.
   win_shell: |
     Compress-Archive -Path "{{ aritafact_path.path }}/*" -DestinationPath "{{ aritafact_path.dest }}" -update -verbose
   with_items: 
@@ -21,7 +17,7 @@
   loop_control:
     loop_var: aritafact_path
 
-- name: Copying artifacts to github repo
+- name: Copying {{ env_name }} environment's artifacts to github repo
   win_copy:
       src: "{{ artifactory_copy_zip.src }}"
       dest: "{{ artifactory_copy_zip.dest }}"

@@ -2,56 +2,54 @@
 - name: Check connectivity for all the servers
   win_ping:
 
-- name: Create artifact folder
+- name: Removing old code folder.
   win_file:
     path: '{{ git_checkout_path }}'
     state: absent
 
-- name: Create artifact folder
+- name: Creating folder to checkout Code repo.
   win_file:
-    path: '{{ git_checkout_path }}'
+    path: '{{ folder_path }}'
     state: directory
+  with_items:
+  - '{{ temp_artifacts }}\artifact_server'
+  - '{{ git_checkout_path }}'
+  loop_control:
+    loop_var: folder_path
 
-- name: Clone project directory
+- name: Clone Code repo from github
   win_shell: |
     git clone https://{{ project_repo_url }} --branch {{ project_branch }} '{{ git_checkout_path }}'
     
-- name: Create artifact folder
+- name: Create temporary folder for performing all the operations on host machine.
   win_file:
     path: '{{ temp_artifacts }}'
     state: directory
     
-- name: combining deployable artifacts
+- name: Getting artifacts to create folder for {{ windows_artifacts }} and {{ snowflake_artifacts }}
   win_copy:
       src: "{{ item.path }}"     
       dest: "{{ item.dest }}"
       remote_src: yes
   loop: '{{ artifact_copy }}'   
 
-- name: set environment name  for {{ env_type }} environment
+- name: setting up environment name for {{ env_type }}
   set_fact:
     environment_name: "{{ env_type }}"
   when: env_type!='ALL'
 
-- name: set environment name array environment
+- name: setting up environment name array for creating artifacts for multiple environments.
   set_fact:
     environment_name: "{{ deployment_environment_array }}"
   when: env_type=='ALL'
 
-- name: Creates directories if not available for artifactory checkout
-  win_file:
-    path: "{{ item }}"
-    state: directory
-  with_items:
-  - '{{ temp_artifacts }}\artifact_server'
-
-- name: Copy bat file for sparse checkout
+- name: Copying bat file for sparse checkout.
   win_copy:
     src: "sparse-checkout.bat"
     dest: '{{ temp_artifacts }}\artifact_server\'
     force: yes
 
-- name: Clone artifact repository from github
+- name: Clone artifact repository from github with sparse checkout.
   win_shell: |
     Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
   args:
@@ -71,11 +69,8 @@
     git push https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }} --all
 
 
-# # - name: Including task for commiting artifact to github repo
-# #   include_tasks: commit_artifact.yml
-
-# - name: Remove ansible_temp folder
-#   win_file:
-#     path: '{{ temp_dir }}'
-#     state: absent
-#     force: yes
+- name: Remove ansible_temp folder
+  win_file:
+    path: '{{ temp_dir }}'
+    state: absent
+    force: yes
