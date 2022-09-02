@@ -1,7 +1,7 @@
 ---
 # vars file for roles/getArtif
-temp_artifactory: 'D:\artifactory_temp'
-deployment_folder: 'D:\Project\GAMODS_DEV'
+temp_artifactory: '{{ default_drive_letter }}\artifactory_temp'
+deployment_folder: '{{ default_drive_letter }}\Project\GAMODS_DEV'
 snowflake_deployment_folder: '{{ deployment_folder }}\build'
 windows_deployment_folder: '{{ deployment_folder }}\script'
 temp_artifacts: '{{ temp_dir }}\artifacts'
