@@ -4,7 +4,7 @@
 
 - name: Removing old code folder.
   win_file:
-    path: '{{ git_checkout_path }}'
+    path: '{{ deploy_dir }}'
     state: absent
 
 - name: Creating folder to checkout Code repo.
@@ -13,13 +13,13 @@
     state: directory
   with_items:
   - '{{ temp_artifacts }}\artifact_server'
-  - '{{ git_checkout_path }}'
+  - '{{ deploy_dir }}'
   loop_control:
     loop_var: folder_path
 
 - name: Clone Code repo from github
   win_shell: |
-    git clone https://{{ project_repo_url }} --branch {{ project_branch }} '{{ git_checkout_path }}'
+    git clone https://{{ project_repo_url }} --branch {{ project_branch }} '{{ deploy_dir }}'
     
 - name: Create temporary folder for performing all the operations on host machine.
   win_file:
@@ -44,7 +44,7 @@
 
 - name: Clone artifact repository from github with sparse checkout.
   win_shell: |
-    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory",'{{ artifact_repo_branch }}'
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://{{ scm_user }}:{{ github_token }}@{{ artifact_repo_url }}","artifactory",'{{ artifact_repo_branch }}'
   args:
     chdir: '{{ temp_artifacts }}\artifact_server'
 
@@ -59,10 +59,10 @@
     cd '{{ temp_artifacts }}\artifact_server\artifactory'
     git add .
     git commit -m "artifacts added to git repo"
-    git push https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }} --all
+    git push https://{{ scm_user }}:{{ github_token }}@{{ artifact_repo_url }} --all
 
 - name: Remove ansible_temp folder
   win_file:
-    path: '{{ temp_dir }}'
+    path: '{{ temp_artifact_dir }}'
     state: absent
     force: yes

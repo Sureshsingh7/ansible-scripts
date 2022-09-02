@@ -1,13 +1,14 @@
 ---
 # vars file for localhost
-git_checkout_path: '{{ default_drive_letter }}\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
-temp_dir: '{{ default_drive_letter }}\ansible_temp'
-temp_artifacts: '{{ temp_dir }}\artifacts'
+deploy_dir: '{{ default_drive_letter }}\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
+temp_artifact_dir: '{{ default_drive_letter }}\ansible_temp'
+scm_user: 'Sureshsingh7'
+temp_artifacts: '{{ temp_artifact_dir }}\artifacts'
 artifact_copy:
-- {path: '{{ git_checkout_path}}\ODS_Python', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
-- {path: '{{ git_checkout_path}}\ODS_Batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
-- {path: '{{ git_checkout_path}}\ODS_Datastore', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
-- {path: '{{ git_checkout_path}}\ODS_Build', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
+- {path: '{{ deploy_dir}}\ODS_Python', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
+- {path: '{{ deploy_dir}}\ODS_Batch', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
+- {path: '{{ deploy_dir}}\ODS_Datastore', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
+- {path: '{{ deploy_dir}}\ODS_Build', dest: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}' }
 token_replace_script_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\replace_token.ps1'
 snowflake_config_file_path: '{{ temp_artifacts }}\{{ snowflake_artifact_commit }}\ODS_build\Config.CSV'
 ODS_Batch_path: '{{ temp_artifacts }}\{{ windows_artifact_commit }}\ODS_Batch'
