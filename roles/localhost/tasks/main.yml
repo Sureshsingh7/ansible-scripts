@@ -44,7 +44,7 @@
 
 - name: Clone artifact repository from github with sparse checkout.
   win_shell: |
-    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory","master"
+    Start-Process -FilePath "{{ temp_artifacts }}\artifact_server\sparse-checkout.bat" -Wait -NoNewWindow -Args "https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}","artifactory",'{{ artifact_repo_branch }}'
   args:
     chdir: '{{ temp_artifacts }}\artifact_server'
 

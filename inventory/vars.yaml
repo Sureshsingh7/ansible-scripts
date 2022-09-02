@@ -16,6 +16,7 @@ all:
     project_repo_url: 'github.com/Sureshsingh7/Test.git'
     artifact_repo_url: 'github.com/Sureshsingh7/ansible-scripts.git'
     project_branch: 'master'
+    artifact_repo_branch: 'master'
     windows_artifacts: "windows_artifacts"
     snowflake_artifacts: "snowflake_artifacts"
     windows_artifact_commit: '{{ windows_artifacts }}-{{ project_branch }}'
