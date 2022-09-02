@@ -11,10 +11,20 @@
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_datastore_path }}\*.sql -env '{{ env_name }}'
   register: snowflake_token_replace_output
 
+- name: Mark status to fail for bat token replacement script for snowflake
+  fail:
+    msg: 'script failed due to {{ snowflake_token_replace_output.stderr }}'
+  when: snowflake_token_replace_output.stderr!=""  
+
 - name: Executing {{ token_replace_script_path }} for {{ env_name }} environments windows folder.
   win_shell: |
     & {{ token_replace_script_path }} -configFile {{ snowflake_config_file_path }} -replaceDirectory {{ ODS_Batch_path }}\*.bat -env '{{ env_name }}'
   register: windows_token_replace_output
+
+- name: Mark status to fail for bat token replacement script for windows artifacts
+  fail:
+    msg: 'script failed due to {{ windows_token_replace_output.stderr }}'
+  when: windows_token_replace_output.stderr!=""  
 
 - name: perform Zip operation to compress artifact of {{ env_name }}environment.
   win_shell: |

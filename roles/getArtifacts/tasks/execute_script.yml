@@ -18,7 +18,7 @@
       poll: 5
       register: snowflake_deployment_replace_output
 
-    - name: Mark status to fail for bat token replacement script
+    - name: Mark status to fail for deployment script
       fail:
         msg: 'script failed due to {{ snowflake_deployment_replace_output.stderr }}'
       when: snowflake_deployment_replace_output.stderr!=""  
