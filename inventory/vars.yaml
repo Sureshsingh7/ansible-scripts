@@ -20,6 +20,7 @@ all:
     snowflake_artifacts: "snowflake_artifacts"
     windows_artifact_commit: '{{ windows_artifacts }}-{{ project_branch }}'
     snowflake_artifact_commit: '{{ snowflake_artifacts }}-{{ project_branch }}'
+    default_drive_letter: 'D:'
     github_token: !vault |
           $ANSIBLE_VAULT;1.2;AES256;github
           32616234636430323662386433613638306134376462373565366435346430386166343130383963

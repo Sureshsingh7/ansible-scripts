@@ -1,7 +1,7 @@
 ---
 # vars file for localhost
-git_checkout_path: 'D:\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
-temp_dir: 'D:\ansible_temp'
+git_checkout_path: '{{ default_drive_letter }}\Projects\GAMODS DEV\Workspace\onaraya\AlphaGAMODS75053'
+temp_dir: '{{ default_drive_letter }}\ansible_temp'
 temp_artifacts: '{{ temp_dir }}\artifacts'
 artifact_copy:
 - {path: '{{ git_checkout_path}}\ODS_Python', dest: '{{ temp_artifacts }}\{{ windows_artifact_commit }}' }
