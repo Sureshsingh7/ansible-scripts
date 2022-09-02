@@ -14,7 +14,7 @@
 
     - name: Clone artifact repository from github for deployment
       win_shell: |
-        Start-Process -FilePath "{{ temp_artifactory }}\sparse-checkout.bat" -Wait -NoNewWindow -Args 'https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}',"artifactory","master"
+        Start-Process -FilePath "{{ temp_artifactory }}\sparse-checkout.bat" -Wait -NoNewWindow -Args 'https://Sureshsingh7:{{ github_token }}@{{ artifact_repo_url }}',"artifactory",'{{ artifact_repo_branch }}'
       register: stderr
       args:
         chdir: '{{ temp_artifactory }}'
